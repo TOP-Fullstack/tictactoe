@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.board-bg {
+  width: 500px;
+  height: 500px;
+  background: white;
+}
+
+.board {
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.board-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8rem;
+  user-select: none;
+  background: black;
+}
