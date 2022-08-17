@@ -15,7 +15,7 @@
 <body>
 
     <section>
-        <div class="board-bg">
+        <div class="board-bg fadeIn">
             <div class="board">
                 <div class="board-item"><span class="fadeOut"></span></div>
                 <div class="board-item"><span class="fadeOut"></span></div>
@@ -28,11 +28,14 @@
                 <div class="board-item"><span class="fadeOut"></span></div>
             </div>
         </div>
-
+        <button class="toggle-computer">🤖</button>
     </section>
 
     <section>
-        <div class="winner-display"></div>
+        <div class="end-display fadeOut">
+            <h1>The winner is: <span class="winner-name"></span></h1>
+            <button class="reset">Reset</button>
+        </div>
     </section>
 
 </body>
