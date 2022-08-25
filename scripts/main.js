@@ -2,7 +2,7 @@
 const Player = (name, mark, color) => {
 
     function placeMark(position, color, mark) {
-        let clickedPiece = document.querySelector(`.board :nth-child(${position + 1}) > span`)
+        let clickedPiece = document.querySelector(`.board-item:nth-child(${position + 1}) > span`)
         clickedPiece.className = 'fadeIn';
         clickedPiece.style.color = color;
         clickedPiece.innerHTML = mark;
@@ -12,29 +12,28 @@ const Player = (name, mark, color) => {
 }
 
 // Set two initial players to users with default X + O markers and colors
-let playerOne = Player('Player One', 'X', '#000f00');
-let playerTwo = Player('Player Two', 'O', 'white');
+let playerOne = Player('Player One', 'X', '#4a4a4a');
+let playerTwo = Player('Player Two', 'O', '#3ca9ab');
 
 const displayController = (() => {
 
     // Connect to DOM elements and set initial variables
     const boardSquares = [...document.querySelectorAll('.board-item')];
     const boardMarks = document.querySelectorAll('.board-item > span');
-    const board = document.querySelector('.board-bg');
-    const endDisplay = document.querySelector('.end-display');
-    const reset = document.querySelector('.reset');
-    const winnerName = document.querySelector('.winner-name');
-    const playerType = document.querySelector('.player-toggle > a');
+    const aiToggleButton = document.querySelector('.player-toggle');
+    const resetButton = document.querySelector('.reset');
+    let aiToggleIcon = document.querySelector('.player-toggle span:nth-child(2)');
+    let aiToggleText = document.querySelector('.player-toggle span:nth-child(1)');
     let aiToggled = false;
-    let winner, player;
-    player = playerOne;
+    let winner;
+    let player = playerOne;
 
     // Set bindings
     boardSquares.forEach(element => {
         element.addEventListener('click', _updateBoard)
     });
-    reset.addEventListener('click', _resetGame);
-    playerType.addEventListener('click', _toggleType);
+    aiToggleButton.addEventListener('click', _toggleType);
+    resetButton.addEventListener('click', _resetGame);
 
     // Main game logic
     function _updateBoard() {
@@ -48,7 +47,10 @@ const displayController = (() => {
             _changeTurns();
             let winner = Gameboard.checkWinner();
             // Declare winner, create winner function
-            if (winner) console.log('winner')
+            if (winner) {
+                if (winner.mark == 'tie') console.log('tie')
+                else displayLine(winner, Gameboard.board)
+            }
         }
         else {
             let winner = Gameboard.checkWinner()
@@ -57,17 +59,10 @@ const displayController = (() => {
             } else {
                 bestMove();
                 winner = Gameboard.checkWinner()
-                if (winner) console.log('winner')
+                if (winner) displayLine(winner, Gameboard.board);
             }
             // Declare winner, create winner function
         }
-
-    }
-
-    // Create helper functions
-    function _toggleFade(element) {
-        element.classList.toggle('fadeIn');
-        element.classList.toggle('fadeOut');
     }
 
     function _changeTurns() {
@@ -79,38 +74,41 @@ const displayController = (() => {
 
         _resetGame();
 
-        // Turn off AI
-        if (aiToggled) {
-            playerType.innerHTML = "🤖"
-            aiToggled = false;
-        }
         // Turn on AI
-        else {
-            playerType.innerHTML = "🧍🧍"
+        if (!aiToggled) {
+            aiToggleIcon.innerHTML = "🤖"
+            aiToggleText.innerHTML = "Computer"
             aiToggled = true;
+        }
+        // Turn off AI
+        else {
+            aiToggleIcon.innerHTML = "🧍🧍"
+            aiToggleText.innerHTML = "Two Player"
+            aiToggled = false;
         }
     }
 
     function _resetGame() {
 
         player = playerOne;
-
         for (let i = 0; i < Gameboard.board.length; i++) {
             Gameboard.board[i] = '';
         }
-
         boardMarks.forEach((e) => {
             e.classList.remove('fadeIn');
             e.classList.add('fadeOut');
+            e.style.fontSize = '4rem';
+            e.style.opacity = '1';
             e.innerHTML = '';
         });
+
+        // Reset lines
+        path.classList.add('hidden');
+        path.classList.remove('key-anim1');
+        container.style.zIndex = '-1';
     }
 
-    // function _endGame() {
-    //     _resetGame();
-    //     _toggleFade(board);
-    //     _toggleFade(endDisplay);
-    // }
+    return { winner }
 
 })();
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,12 @@
 </head>
 
 <body>
+
+    <section>
+        <svg height="500px" width="500px" viewbox="0 0 100 100" preserveAspectRatio="none">
+            <path fill="none" class="hidden" stroke-width="0.8px" stroke="rgba(74, 74, 74, 0.4)" />
+        </svg>
+    </section>
 
     <section>
         <div class="board-bg fadeIn">
@@ -28,19 +34,20 @@
                 <div class="board-item"><span class="fadeOut"></span></div>
             </div>
         </div>
-        <span class="player-toggle">
-            <p></p>
-        </span>
+
+        <ul class="wrapper">
+            <li class="icon player-toggle">
+                <span class="tooltip">Two Player</span>
+                <span>🧍🧍</span>
+            </li>
+            <li class="icon reset">
+                <img src="img/reload.png">
+            </li>
+        </ul>
     </section>
 
-    <!-- <section>
-        <div class="end-display fadeOut">
-            <h1>The winner is: <span class="winner-name"></span></h1>
-            <button class="reset">Reset</button>
-        </div>
-    </section> -->
-
 </body>
+<script src="scripts/lines.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/minimax.js"></script>
 
